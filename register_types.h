@@ -1,4 +1,4 @@
 /* register_types.h */
 
-void register_gdsqlite_types();
-void unregister_gdsqlite_types();
+void register_gd_sqlite_types();
+void unregister_gd_sqlite_types();
