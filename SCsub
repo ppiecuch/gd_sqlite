@@ -5,6 +5,15 @@ if env['platform'] == 'android':
     env.Append(LIBS=['dl'])
 elif env['platform'] == 'windows':
     pass
+elif env['platform'] == 'nx':
+    env.Append(CPPDEFINES=[
+        'OS_NX=1', 
+        'SQLITE_OMIT_LOAD_EXTENSION=1', 
+        'SQLITE_DISABLE_DIRSYNC=1',
+        'SQLITE_NO_SYNC=1',
+        'SQLITE_OMIT_WAL=1',
+        'SQLITE_MAX_MMAP_SIZE=0'
+    ])
 else:
     env.Append(LIBS=['pthread', 'dl'])
 
