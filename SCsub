@@ -1,12 +1,16 @@
-# SCsub
+#!/usr/bin/env python
+
 Import('env')
+Import('env_modules')
+
+env_module = env_modules.Clone()
 
 if env['platform'] == 'android':
-    env.Append(LIBS=['dl'])
+    env_module.Append(LIBS=['dl'])
 elif env['platform'] == 'windows':
     pass
 elif env['platform'] == 'nx':
-    env.Append(CPPDEFINES=[
+    env_module.Append(CPPDEFINES=[
         'OS_NX=1', 
         'SQLITE_OMIT_LOAD_EXTENSION=1', 
         'SQLITE_DISABLE_DIRSYNC=1',
@@ -15,7 +19,12 @@ elif env['platform'] == 'nx':
         'SQLITE_MAX_MMAP_SIZE=0'
     ])
 else:
-    env.Append(LIBS=['pthread', 'dl'])
+    env_module.Append(LIBS=['pthread', 'dl'])
 
-env.add_source_files(env.modules_sources,"*.cpp") # just add all cpp files to the build
-env.add_source_files(env.modules_sources,"sqlite/*.c") # add sqlite sources
+sources = Glob("*.cpp")       # just add all cpp files to the build
+sources += Glob("sqlite/*.c") # add sqlite sources
+
+# Compile as a static library
+lib = env_module.Library("gd_sqlite", sources)
+# Add the library as a dependency of the final executable
+env.Prepend(LIBS=[lib])

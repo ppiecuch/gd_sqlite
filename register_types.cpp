@@ -2,7 +2,7 @@
 
 #include "register_types.h"
 
-#include "gdsqlite.h"
+#include "gd_sqlite.h"
 
 void register_gd_sqlite_types() {
 	ClassDB::register_class<SQLite>();
