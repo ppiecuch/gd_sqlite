@@ -35,7 +35,7 @@ int SQLite::step() {
 int SQLite::step_assoc() {
 	int ret = sqlite3_step(stmt);
 	if (_row_names.size() == 0) {
-		for(unsigned int i = 0; i < sqlite3_column_count(stmt); ++i)
+		for(int i = 0; i < sqlite3_column_count(stmt); ++i)
 			_row_names[sqlite3_column_name(stmt,i)] = i;
 	}
 	return ret;
@@ -47,7 +47,7 @@ Array SQLite::fetch_assoc() {
 		int ret = sqlite3_step(stmt);
 		if (ret == SQLITE_ROW) {
 			Dictionary row;
-			for(unsigned int i = 0; i < sqlite3_column_count(stmt); ++i) {
+			for(int i = 0; i < sqlite3_column_count(stmt); ++i) {
 				int type = sqlite3_column_type(stmt, i);
 				switch (type) {
 					case SQLITE_INTEGER: row[sqlite3_column_name(stmt,i)] = sqlite3_column_int(stmt, i); break;

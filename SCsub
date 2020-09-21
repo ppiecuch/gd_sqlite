@@ -1,28 +1,42 @@
 #!/usr/bin/env python
 
-Import('env')
-Import('env_modules')
+Import("env")
+Import("env_modules")
 
 env_module = env_modules.Clone()
 
-if env['platform'] == 'android':
-    env_module.Append(LIBS=['dl'])
-elif env['platform'] == 'windows':
+if env["platform"] == "android":
+    env_module.Append(LIBS=["dl"])
+elif env["platform"] == "windows":
     pass
-elif env['platform'] == 'nx':
-    env_module.Append(CPPDEFINES=[
-        'OS_NX=1', 
-        'SQLITE_OMIT_LOAD_EXTENSION=1', 
-        'SQLITE_DISABLE_DIRSYNC=1',
-        'SQLITE_NO_SYNC=1',
-        'SQLITE_OMIT_WAL=1',
-        'SQLITE_MAX_MMAP_SIZE=0'
-    ])
+elif env["platform"] == "nx":
+    env_module.Append(
+        CPPDEFINES=[
+            "OS_NX=1",
+            "SQLITE_OMIT_LOAD_EXTENSION=1",
+            "SQLITE_DISABLE_DIRSYNC=1",
+            "SQLITE_NO_SYNC=1",
+            "SQLITE_OMIT_WAL=1",
+            "SQLITE_MAX_MMAP_SIZE=0"
+        ]
+    )
+elif env["platform"] == "3ds":
+    env_module.Append(
+        CPPDEFINES=[
+            "OS_3DS=1",
+            "SQLITE_OMIT_LOAD_EXTENSION=1",
+            "SQLITE_THREADSAFE=0",
+            "SQLITE_DISABLE_DIRSYNC=1",
+            "SQLITE_NO_SYNC=1",
+            "SQLITE_OMIT_WAL=1",
+            "SQLITE_MAX_MMAP_SIZE=0"
+        ]
+    )
 else:
-    env_module.Append(LIBS=['pthread', 'dl'])
+    env_module.Append(LIBS=["pthread", "dl"])
 
-sources = Glob("*.cpp")       # just add all cpp files to the build
-sources += Glob("sqlite/*.c") # add sqlite sources
+sources = Glob("*.cpp")  # just add all cpp files to the build
+sources += Glob("sqlite/*.c")  # add sqlite sources
 
 # Compile as a static library
 lib = env_module.Library("gd_sqlite", sources)
