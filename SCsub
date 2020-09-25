@@ -20,6 +20,17 @@ elif env["platform"] == "nx":
             "SQLITE_MAX_MMAP_SIZE=0"
         ]
     )
+elif env["platform"] == "psvita":
+    env_module.Append(
+        CPPDEFINES=[
+            "OS_PSP2=1",
+            "SQLITE_OMIT_LOAD_EXTENSION=1",
+            "SQLITE_DISABLE_DIRSYNC=1",
+            "SQLITE_NO_SYNC=1",
+            "SQLITE_OMIT_WAL=1",
+            "SQLITE_MAX_MMAP_SIZE=0"
+        ]
+    )
 elif env["platform"] == "3ds":
     env_module.Append(
         CPPDEFINES=[
