@@ -31,10 +31,10 @@ elif env["platform"] == "psvita":
             "SQLITE_MAX_MMAP_SIZE=0"
         ]
     )
-elif env["platform"] == "3ds":
+elif env["platform"] == "3ds" or env["platform"] == "psp":
     env_module.Append(
         CPPDEFINES=[
-            "OS_3DS=1",
+            "OS_3DS=1" if env["platform"] == "3ds" else "OS_PSP=1",
             "SQLITE_OMIT_LOAD_EXTENSION=1",
             "SQLITE_THREADSAFE=0",
             "SQLITE_DISABLE_DIRSYNC=1",

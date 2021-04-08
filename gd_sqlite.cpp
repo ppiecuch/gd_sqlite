@@ -105,7 +105,7 @@ bool SQLite::query_with_bindings(String p_query, Array param_bindings, Array que
             }
 
             default:
-                ERR_PRINT("GDSQLite Error: Binding a parameter of type " + String(std::to_string(param_bindings[i].get_type()).c_str()) + " (TYPE_*) is not supported!")
+                ERR_PRINT("GDSQLite Error: Binding a parameter of type " + String::num(param_bindings[i].get_type()) + " (TYPE_*) is not supported!")
                 sqlite3_finalize(stmt);
                 return false;
         }
