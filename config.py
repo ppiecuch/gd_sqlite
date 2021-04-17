@@ -1,4 +1,5 @@
 # config.py
+import SCons
 
 
 def can_build(env, platform):
@@ -6,4 +7,8 @@ def can_build(env, platform):
 
 
 def configure(env):
-    pass
+    from SCons.Script import Variables, BoolVariable, Help, Exit
+
+    opts = Variables()
+    opts.Add(BoolVariable("builtin_sqlite", "Use the built-in SQLite library", True))
+    opts.Update(env)
